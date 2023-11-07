@@ -31,8 +31,6 @@ const Login = (props) => {
   // const [emailIsValid, setEmailIsValid] = useState();
   // const [enteredPassword, setEnteredPassword] = useState('');
   // const [passwordIsValid, setPasswordIsValid] = useState();
-  const [enteredCollege,setEnteredCollege]=useState('');
-  const [collegeIsvalid,setcollegeIsValid]=useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
   const [emailState, dispatchEmail]=useReducer(emailReducer,{
@@ -46,7 +44,7 @@ const Login = (props) => {
   //  const interval= setTimeout(()=>{
   //     console.log('hi');
   //     setFormIsValid(
-  //     enteredEmail.includes('@') && enteredPassword.trim().length>6 && enteredCollege.trim().length>2 );
+  //     enteredEmail.includes('@') && enteredPassword.trim().length>6 );
   //   },2000)
 
   //   return ()=>{
@@ -61,18 +59,16 @@ const Login = (props) => {
    const emailChangeHandler = (event) => {
     dispatchEmail({type:'USER_INPUT', val:event.target.value})
     setFormIsValid(
-   emailState.isValid && passwordState.isValid && enteredCollege.trim().length>2 );
+   emailState.isValid && passwordState.isValid );
 
   };
 
   const passwordChangeHandler = (event) => {
    dispatchPassword({type:'USER_PASSWORD', val:event.target.value})
-    setFormIsValid(emailState.isValid && passwordState.isValid && enteredCollege.trim().length>2 );
+    setFormIsValid(emailState.isValid && passwordState.isValid  );
   };
 
-  const collegeChangeHandler=(event)=>{
-    setEnteredCollege(event.target.value)
-  }
+
 
   const validateEmailHandler = () => {
     // setEmailIsValid(emailState.isValid);
@@ -88,13 +84,10 @@ const Login = (props) => {
     })
   };
 
-  const validateCollegeHandler=()=>{
-    setcollegeIsValid(enteredCollege.trim().length > 2);
-  }
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value,enteredCollege);
+    props.onLogin(emailState.value, passwordState.value);
   };
 
   return (
@@ -126,20 +119,6 @@ const Login = (props) => {
             value={passwordState.value}
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
-          />
-        </div>
-        <div
-          className={`${classes.control} ${
-            collegeIsvalid === false ? classes.invalid : ''
-          }`}
-        >
-          <label htmlFor="college">College Name</label>
-          <input
-            type="text"
-            id="text"
-            value={enteredCollege}
-            onChange={collegeChangeHandler}
-            onBlur={validateCollegeHandler}
           />
         </div>
         <div className={classes.actions}>
